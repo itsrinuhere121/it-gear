@@ -1,5 +1,6 @@
 from fastapi import FastAPI, APIRouter, Depends
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from database import SessionLocal
 from models import Checkout
 from schemas import *
@@ -7,7 +8,16 @@ from schemas import *
 from crud import *
 app = FastAPI()  # Create the FastAPI app instance
 router = APIRouter()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",  # React development server
+        "http://127.0.0.1:3000"   # Alternative localhost
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 def get_db():
     db = SessionLocal()
     try:
@@ -19,7 +29,7 @@ def get_db():
 def read_equipment(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return get_equipment(db, skip=skip, limit=limit)
 
-@app.post("/equipment/", response_model=EquipmentBase)
+@app.post("/equipment/", response_model=EquipmentCreate)
 def create_new_equipment(equipment: EquipmentCreate, db: Session = Depends(get_db)):
     return create_equipment(db=db, equipment=equipment)
 

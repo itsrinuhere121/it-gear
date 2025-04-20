@@ -14,13 +14,12 @@ class EquipmentUpdate(BaseModel):
     name: str
     category: str
     status: str
-class EquipmentCreate(EquipmentBase):
-    item_id: int
+class EquipmentCreate(BaseModel):
     name: str
     category: str
     status: str = "available"
 
-class Equipment(EquipmentBase):
+class Equipment(BaseModel):
     item_id: int
     status: str
     

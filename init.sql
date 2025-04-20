@@ -52,3 +52,6 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+-- Ensure auto-increment is enabled
+ALTER TABLE employees MODIFY emp_id INT AUTO_INCREMENT;

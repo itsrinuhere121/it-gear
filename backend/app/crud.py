@@ -27,7 +27,10 @@ def get_equipment(db: Session, skip: int = 0, limit: int = 100):
     return db.query(Equipment).offset(skip).limit(limit).all()
 # Equipment CRUD
 def create_equipment(db: Session, equipment: EquipmentCreate):
-    db_equipment = Equipment(**equipment.dict())
+    db_equipment = Equipment(
+        name=equipment.name,
+        category=equipment.category
+    )
     db.add(db_equipment)
     db.commit()
     db.refresh(db_equipment)

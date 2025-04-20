@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 class Equipment(Base):
     __tablename__ = "Equipment"
-    item_id = Column(Integer, primary_key=True, index=True)
+    item_id = Column(Integer, primary_key=True, index=True,autoincrement=True)
     name = Column(String(50))
     category = Column(String(20))
     status = Column(String(30), default="available")  # Default value for status
